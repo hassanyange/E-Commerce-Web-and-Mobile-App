@@ -3,19 +3,16 @@ from django.db.models.signals import post_save
 from django.conf import settings
 from django.shortcuts import reverse
 
-# from django_countries.fields import CountryField
-
 LABEL_CHOICES = (
-    ('P', 'primary'),
-    ('S', 'secondary'),
-    ('D', 'danger')
+    ('P', 'Primary'),
+    ('S', 'Secondary'),
+    ('D', 'Danger')
 )
 
 ADDRESS_CHOICES = (
     ('B', 'Billing'),
     ('S', 'Shipping')
 )
-
 
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -24,7 +21,6 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
 
 class Category(models.Model):
     category = models.CharField(max_length=30)
@@ -37,10 +33,9 @@ class Category(models.Model):
             "category_name": self.category
         })
 
-
 class Item(models.Model):
     item_name = models.CharField(max_length=100)
-    item_category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
     item_image = models.ImageField(upload_to='items_images/')
@@ -53,20 +48,13 @@ class Item(models.Model):
         return self.item_name
 
     def get_absolute_url(self):
-        return reverse('core:products', kwargs={
-            'slug': self.slug
-        })
+        return reverse('core:products', kwargs={'slug': self.slug})
 
-    def get_add_to_cart(self):
-        return reverse('core:add_to_cart', kwargs={
-            'slug': self.slug
-        })
+    def get_add_to_cart_url(self):
+        return reverse('core:add_to_cart', kwargs={'slug': self.slug})
 
-    def remove_from_the_cart(self):
-        return reverse('core:remove_from_the_cart', kwargs={
-            'slug':self.slug
-        })
-
+    def get_remove_from_cart_url(self):
+        return reverse('core:remove_from_cart', kwargs={'slug':self.slug})
 
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -88,7 +76,6 @@ class OrderItem(models.Model):
             return self.get_total_discount_price()
         else:
             return self.get_total_price()
-
 
 class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -114,24 +101,21 @@ class Cart(models.Model):
     def get_total(self):
         total = 0
         for order_item in self.items.all():
-            total = total + order_item.get_final_price()
-        if self.coupon is not None:
+            total += order_item.get_final_price()
+        if self.coupon:
             total -= self.coupon.amount
         return total
-
 
 class Address(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     street_address = models.CharField(max_length=100)
     apartment_address = models.CharField(max_length=100)
-    # country = models.CharField(max_length=200, choices=CountryField().choices + [('', 'Select Country')])
     zip_code = models.CharField(max_length=100)
     address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
     is_default = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
-
 
 class Payment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True)
@@ -143,14 +127,12 @@ class Payment(models.Model):
     def __str__(self):
         return str(self.user)
 
-
 class Coupon(models.Model):
     coupon = models.CharField(max_length=30)
     amount = models.IntegerField()
 
     def __str__(self):
         return self.coupon
-
 
 class Refund(models.Model):
     order = models.ForeignKey(Cart, on_delete=models.CASCADE)
@@ -161,7 +143,6 @@ class Refund(models.Model):
     def __str__(self):
         return str(self.pk)
 
-
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
@@ -171,11 +152,101 @@ class Comment(models.Model):
     def __str__(self):
         return self.comment
 
-
 def user_profile_receiver(sender, instance, created, *args, **kwargs):
     if created:
-        user_profile = UserProfile.objects.create(user=instance)
-
+        UserProfile.objects.create(user=instance)
 
 # Signal to create user profile every time a new user is created
 post_save.connect(user_profile_receiver, sender=settings.AUTH_USER_MODEL)
+
+
+class RawMaterial(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    price = models.FloatField()
+    discount_price = models.FloatField(blank=True, null=True)
+    image = models.ImageField(upload_to='items_images/')
+    labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
+    slug = models.SlugField(unique=True)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('core:raw_material_detail', kwargs={'slug': self.slug})
+
+    def get_add_to_cart_url(self):
+        return reverse('core:add_raw_material_to_cart', kwargs={'slug': self.slug})
+
+    def get_remove_from_cart_url(self):
+        return reverse('core:remove_raw_material_from_cart', kwargs={'slug': self.slug})
+
+
+class BuildingSupply(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    price = models.FloatField()
+    discount_price = models.FloatField(blank=True, null=True)
+    image = models.ImageField(upload_to='items_images/')
+    labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
+    slug = models.SlugField(unique=True)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('core:building_supply_detail', kwargs={'slug': self.slug})
+
+    def get_add_to_cart_url(self):
+        return reverse('core:add_building_supply_to_cart', kwargs={'slug': self.slug})
+
+    def get_remove_from_cart_url(self):
+        return reverse('core:remove_building_supply_from_cart', kwargs={'slug': self.slug})
+
+
+class ConstructionEquipment(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    price = models.FloatField()
+    discount_price = models.FloatField(blank=True, null=True)
+    image = models.ImageField(upload_to='items_images/')
+    labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
+    slug = models.SlugField(unique=True)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('core:construction_equipment_detail', kwargs={'slug': self.slug})
+
+    def get_add_to_cart_url(self):
+        return reverse('core:add_construction_equipment_to_cart', kwargs={'slug': self.slug})
+
+    def get_remove_from_cart_url(self):
+        return reverse('core:remove_construction_equipment_from_cart', kwargs={'slug': self.slug})
+
+
+class ArchitecturalProduct(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    price = models.FloatField()
+    discount_price = models.FloatField(blank=True, null=True)
+    image = models.ImageField(upload_to='items_images/')
+    labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
+    slug = models.SlugField(unique=True)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('core:architectural_product_detail', kwargs={'slug': self.slug})
+
+    def get_add_to_cart_url(self):
+        return reverse('core:add_architectural_product_to_cart', kwargs={'slug': self.slug})
+
+    def get_remove_from_cart_url(self):
+        return reverse('core:remove_architectural_product_from_cart', kwargs={'slug': self.slug})
