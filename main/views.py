@@ -5,3 +5,6 @@ def index(request):
 
 def userslist(request):
     return render(request,'users-list.html')
+
+def materiaslist(request):
+    return render(request, 'materials.html')

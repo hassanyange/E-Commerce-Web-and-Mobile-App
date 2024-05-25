@@ -1,11 +1,11 @@
-﻿{% load static %}
+{% load static %}
 <!doctype html>
 <html lang="en">
 
     <head>
         
         <meta charset="utf-8">
-        <title>Users List | B2B - Admin & Dashboard Template</title>
+        <title>Material List | B2B - Admin & Dashboard Template</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description">
         <meta content="Themesdesign" name="author">
@@ -64,7 +64,7 @@
             
                       <!-- start page title -->
                       <div class="page-title-box align-self-center d-none d-md-block">
-                        <h4 class="page-title mb-0">Users List</h4>
+                        <h4 class="page-title mb-0">Material List</h4>
                       </div>
                       <!-- end page title -->
                     </div>
@@ -335,7 +335,7 @@
                                <span>Management section</span>
                            </a>
                            <ul class="sub-menu" aria-expanded="true">
-                               <li><a href="calendar.html">Material Management</a></li>
+                               <li><a href="{% url 'materialslist' %}">Material Management</a></li>
 
                             
 
@@ -495,7 +495,7 @@
                                             <div class="col-md-6">
                                                 <div class="mb-3 float-end">
                                                     <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                                                        <i class="mdi mdi-plus me-1"></i> Add User
+                                                        <i class="mdi mdi-plus me-1"></i> Add Material
                                                     </a>
                                                 </div>
                                             </div>
@@ -511,10 +511,9 @@
                                                             <label class="form-check-label" for="contacusercheck"></label>
                                                         </div>
                                                     </th>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Location</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Phone number</th>
+                                                    <th scope="col">Name of Material</th>
+                                                    <th scope="col">Type of material</th>
+                                                  
                                                     <th scope="col" style="width: 200px;">Action</th>
                                                   </tr>
                                                 </thead>
@@ -528,11 +527,10 @@
                                                         </th>
                                                         <td>
                                                             <img src="{% static 'assets/images/users/avatar-2.jpg' %}" alt="" class="avatar-xs rounded-circle me-2">
-                                                            <a href="#" class="text-body">Simon Ryles</a>
+                                                            <a href="#" class="text-body">Rectanglar Blocks</a>
                                                         </td>
-                                                        <td>Dar es Salaam</td>
-                                                        <td>SimonRyles@Tocly.com</td>
-                                                        <td>0711583374</td>
+                                                        <td>Raw materials</td>
+                                                      
                                                         <td>
                                                             <ul class="list-inline mb-0">
                                                                 <li class="list-inline-item">
@@ -564,11 +562,9 @@
                                                         </th>
                                                         <td>
                                                             <img src="{% static 'assets/images/users/avatar-3.jpg' %}" alt="" class="avatar-xs rounded-circle me-2">
-                                                            <a href="#" class="text-body">Marion Walker</a>
+                                                            <a href="#" class="text-body">Rectanglar Blocks</a>
                                                         </td>
-                                                        <td>Dar es Salaam</td>
-                                                        <td>MarionWalker@Tocly.com</td>
-                                                        <td>0711583374</td>
+                                                        <td>Raw materials</td>
                                                         <td>
                                                             <ul class="list-inline mb-0">
                                                                 <li class="list-inline-item">
@@ -604,11 +600,9 @@
                                                                     <i class="mdi mdi-account-circle"></i>
                                                                 </div>
                                                             </div>
-                                                            <a href="#" class="text-body">Frederick White</a>
+                                                            <a href="#" class="text-body">Rectanglar Blocks</a>
                                                         </td>
-                                                        <td>Dar es Salaam</td>
-                                                        <td>FrederickWhite@Tocly.com</td>
-                                                        <td>0711583374</td>
+                                                        <td>Raw materials</td>
                                                         <td>
                                                             <ul class="list-inline mb-0">
                                                                 <li class="list-inline-item">
@@ -640,11 +634,10 @@
                                                         </th>
                                                         <td>
                                                             <img src="{% static 'assets/images/users/avatar-4.jpg' %}" alt="" class="avatar-xs rounded-circle me-2">
-                                                            <a href="#" class="text-body">Shanon Marvin</a>
+                                                            <a href="#" class="text-body">Rectanglar Blocks</a>
                                                         </td>
-                                                        <td>Dar es Salaam</td>
-                                                        <td>ShanonMarvin@Tocly.com</td>
-                                                        <td>0711583374</td>
+                                                        <td>Raw matrials</td>
+                                                      
                                                         <td>
                                                             <ul class="list-inline mb-0">
                                                                 <li class="list-inline-item">
@@ -680,11 +673,9 @@
                                                                     <i class="mdi mdi-account-circle"></i>
                                                                 </div>
                                                             </div>
-                                                            <a href="#" class="text-body">Mark Jones</a>
+                                                            <a href="#" class="text-body">Rectanglar Blocks</a>
                                                         </td>
-                                                        <td>Dar es Salaam</td>
-                                                        <td>MarkJones@Tocly.com</td>
-                                                        <td>0711583374</td>
+                                                        <td>Raw materials</td>
                                                         <td>
                                                             <ul class="list-inline mb-0">
                                                                 <li class="list-inline-item">
@@ -716,11 +707,9 @@
                                                         </th>
                                                         <td>
                                                             <img src="{% static 'assets/images/users/avatar-5.jpg' %}" alt="" class="avatar-xs rounded-circle me-2">
-                                                            <a href="#" class="text-body">Janice Morgan</a>
+                                                            <a href="#" class="text-body">Rectanglar Blocks</a>
                                                         </td>
-                                                        <td>Dar es Salaam</td>
-                                                        <td>JaniceMorgan@Tocly.com</td>
-                                                        <td>0711583374</td>
+                                                        <td>Raw materials</td>
                                                         <td>
                                                             <ul class="list-inline mb-0">
                                                                 <li class="list-inline-item">
@@ -752,11 +741,9 @@
                                                         </th>
                                                         <td>
                                                             <img src="{% static 'assets/images/users/avatar-7.jpg' %}" alt="" class="avatar-xs rounded-circle me-2">
-                                                            <a href="#" class="text-body">Patrick Petty</a>
+                                                            <a href="#" class="text-body">Rectanglar Blocks</a>
                                                         </td>
-                                                        <td>Dar es Salaam</td>
-                                                        <td>PatrickPetty@Tocly.com</td>
-                                                        <td>0711583374</td>
+                                                        <td>Raw materials</td>
                                                         <td>
                                                             <ul class="list-inline mb-0">
                                                                 <li class="list-inline-item">
@@ -788,11 +775,9 @@
                                                         </th>
                                                         <td>
                                                             <img src="{% static 'assets/images/users/avatar-8.jpg' %}" alt="" class="avatar-xs rounded-circle me-2">
-                                                            <a href="#" class="text-body">Marilyn Horton</a>
+                                                            <a href="#" class="text-body">Rectanglar Blocks</a>
                                                         </td>
-                                                        <td>Dar es Salaamr</td>
-                                                        <td>MarilynHorton@Tocly.com</td>
-                                                        <td>0711583374</td>
+                                                        <td>Raww materials</td>
                                                         <td>
                                                             <ul class="list-inline mb-0">
                                                                 <li class="list-inline-item">
@@ -824,11 +809,9 @@
                                                         </th>
                                                         <td>
                                                             <img src="{% static 'assets/images/users/avatar-2.jpg' %}" alt="" class="avatar-xs rounded-circle me-2">
-                                                            <a href="#" class="text-body">Neal Womack</a>
+                                                            <a href="#" class="text-body">Rectanglar Blocks</a>
                                                         </td>
-                                                        <td>Dar es Salaam</td>
-                                                        <td>NealWomack@Tocly.com</td>
-                                                        <td>0711583374</td>
+                                                        <td>Raw materials</td>
                                                         <td>
                                                             <ul class="list-inline mb-0">
                                                                 <li class="list-inline-item">
@@ -864,11 +847,9 @@
                                                                     <i class="mdi mdi-account-circle"></i>
                                                                 </div>
                                                             </div>
-                                                            <a href="#" class="text-body">Steven Williams</a>
+                                                            <a href="#" class="text-body">Rectanglar Blocks</a>
                                                         </td>
-                                                        <td>Dar es Salaam</td>
-                                                        <td>Steven Williams@Tocly.com</td>
-                                                        <td>0711583374</td>
+                                                        <td>Raw materials</td>
                                                         <td>
                                                             <ul class="list-inline mb-0">
                                                                 <li class="list-inline-item">
@@ -938,29 +919,26 @@
                     <div class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+                                <h5 class="modal-title" id="addUserModalLabel">Add Material</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <!-- end modalheader -->
                             <div class="modal-body p-4">
                                 <div>
                                     <div class="mb-3">
-                                        <label for="addcontact-name-input" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="addcontact-name-input" placeholder="Enter Name">
+                                        <label for="addcontact-name-input" class="form-label">Name of Material</label>
+                                        <input type="text" class="form-control" id="addcontact-name-input" placeholder="Enter material name">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="addcontact-Location-input" class="form-label">Location</label>
-                                        <input type="text" class="form-control" id="addcontact-Location-input" placeholder="Enter Location">
+                                        <label for="addcontact-Location-input" class="form-label">Type of Material</label>
+                                        <input type="text" class="form-control" id="addcontact-Location-input" placeholder="Enter type">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="addcontact-file-input" class="form-label">User Image</label>
+                                        <label for="addcontact-file-input" class="form-label">Material Image</label>
                                         <input type="file" class="form-control" id="addcontact-file-input">
                                     </div>
 
-                                    <div class="mb-3">
-                                        <label for="addcontact-email-input" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="addcontact-email-input" placeholder="Enter Email">
-                                    </div>
+                                   
                                 </div>
                             </div>
                             <!-- end modalbody -->
@@ -980,7 +958,9 @@
                             <div class="col-sm-6">
                                 <script>document.write(new Date().getFullYear())</script> © B2B.
                             </div>
-                           
+                            <div class="col-sm-6">
+                               
+                            </div>
                         </div>
                     </div>
                 </footer>
