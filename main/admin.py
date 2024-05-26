@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, Category, Item, OrderItem, Cart, Address, Payment, Coupon, Refund, Comment, RawMaterial, BuildingSupply, ConstructionEquipment, ArchitecturalProduct
+from .models import UserProfile, Category, Customer, Item, OrderItem, Cart, Address, Payment, Coupon, Refund, Comment, RawMaterial, BuildingSupply, ConstructionEquipment, ArchitecturalProduct
 
 admin.site.register(UserProfile)
 admin.site.register(Category)
@@ -8,6 +8,7 @@ admin.site.register(OrderItem)
 admin.site.register(Cart)
 admin.site.register(Address)
 admin.site.register(Payment)
+admin.site.register(Customer)
 admin.site.register(Coupon)
 admin.site.register(Refund)
 admin.site.register(Comment)

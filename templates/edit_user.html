@@ -1,0 +1,31 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <!-- Start right Content here -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Edit User</h4>
+                                <form method="post" enctype="multipart/form-data" action="{% url 'edit_user' user.id %}">
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary w-md">Save Changes</button>
+                                        <a href="{% url 'userlist' %}" class="btn btn-secondary w-md">Cancel</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div> <!-- container-fluid -->
+        </div> <!-- end page-content -->
+    </div>
+    <!-- end main content-->
+{% endblock content %}
