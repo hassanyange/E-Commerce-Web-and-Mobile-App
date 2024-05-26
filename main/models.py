@@ -23,6 +23,14 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Customer(models.Model):
+    name = models.CharField(max_length=255, blank=True)
+    email = models.EmailField(default="customer@gmail.com")
+    location = models.CharField(max_length=200, default="Dar es salaam")
+    picture = models.ImageField(upload_to='static/images/', default='default.jpg')
+    phone_number = models.CharField(max_length=20, blank=True)
+
+
 class Category(models.Model):
     category = models.CharField(max_length=30)
 

@@ -2,12 +2,23 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
+from .forms import CustomerForm
 
 @login_required
 def index(request):
     return render(request, 'index.html')
 
 
+def add_customer(request):
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # Redirect to a success page or any other view after adding the customer
+            return redirect('userlist')  
+    else:
+        form = CustomerForm()
+    return render(request, 'users-list.html', {'form': form})
 
 def signin(request):
     if request.method == 'POST':
