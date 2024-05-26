@@ -1,0 +1,39 @@
+﻿{% extends 'base.html' %}
+{%load static%}
+{% block title %}Manage Orders{% endblock %}
+
+{% block content %}
+<h1>Manage Orders</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.user.username }}</td>
+            <td>
+                <ul>
+                    {% for item in order.items.all %}
+                    <li>{{ item.quantity }} x {{ item.item.item_name }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>${{ order.get_total }}</td>
+            <td>{{ order.ordered|yesno:"Ordered,Not Ordered" }}</td>
+            <td>
+                <a href="{% url 'dashboard:order_detail' order.id %}">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

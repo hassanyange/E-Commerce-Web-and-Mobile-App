@@ -129,15 +129,23 @@ class Address(models.Model):
     def __str__(self):
         return self.user.username
 
-class Payment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True)
-    stripe_charge_id = models.CharField(max_length=50, null=True, blank=True)
-    ssl_charge_id = models.CharField(max_length=50, null=True, blank=True)
-    amount = models.IntegerField()
+class Invoice(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    order = models.OneToOneField(Cart, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return str(self.user)
+        return f"Invoice {self.id} for {self.user.username}"
+
+class Payment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    successful = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Payment {self.id} by {self.user.username}"
 
 class Coupon(models.Model):
     coupon = models.CharField(max_length=30)

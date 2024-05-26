@@ -103,7 +103,7 @@
 
                         <div class="dropdown d-none d-sm-inline-block">
                             <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="" src="{% static 'assets/images/flags/us.jpg' %}" alt="Header Language" height="16">
+                            <!-- <img class="" src="{% static 'assets/images/flags/us.jpg' %}" alt="Header Language" height="16"> -->
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                     
@@ -307,8 +307,8 @@
                                     <li>
                                         <a href="javascript: void(0);" class="has-arrow">Orders and Sales</a>
                                         <ul class="sub-menu" aria-expanded="false">
-                                            <li><a href="email-inbox.html">Orders</a></li>
-                                            <li><a href="email-read.html">Sales</a></li>
+                                            <li><a href="{% url 'orders' %}">Orders</a></li>
+                                            <li><a href="{% url 'sales'%}">Sales</a></li>
                                         </ul>
                                     </li>
 
@@ -317,8 +317,8 @@
                                     <li>
                                         <a href="javascript: void(0);" class="has-arrow">Invoices and Payments</a>
                                         <ul class="sub-menu" aria-expanded="false">
-                                            <li><a href="invoices.html">Invoices</a></li>
-                                            <li><a href="invoice-detail.html">Payments</a></li>
+                                            <li><a href="{% url 'invoices'%}">Invoices</a></li>
+                                            <li><a href="{% url 'payments' %}">Payments</a></li>
                                         </ul>
                                     </li>
 
