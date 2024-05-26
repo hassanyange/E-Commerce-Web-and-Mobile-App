@@ -134,7 +134,8 @@
 
 
                                <!-- Modal -->
-                               <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+                          <!-- Modal -->
+                            <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -143,7 +144,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <!-- Customer Form -->
-                                            <form method="post" enctype="multipart/form-data">
+                                            <form method="post" enctype="multipart/form-data" action="{% url 'add_customer' %}">
                                                 {% csrf_token %}
                                                 {{ form.as_p }}
                                                 <div class="modal-footer">
@@ -155,6 +156,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <!-- end modalbody -->
                           
                         </div><!-- end content -->
