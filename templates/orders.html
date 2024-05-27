@@ -1,34 +1,45 @@
 ﻿{% extends "base.html" %}
+{% load static %}
 
-{% block title %}Invoices{% endblock %}
+{% block title %}Manage Orders{% endblock %}
 
 {% block content %}
     <!-- Start right Content here -->
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
-                <h1>Invoices</h1>
+                <h1>Manage Orders</h1>
                 <div class="card">
                     <div class="card-body">
-                        <!-- Invoices Table -->
+                        <!-- Orders Table -->
                         <div class="table-responsive mb-4">
                             <table class="table table-hover table-nowrap align-middle mb-0">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col">Invoice ID</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Total Amount</th>
+                                        <th scope="col">Order ID</th>
+                                        <th scope="col">User</th>
+                                        <th scope="col">Items</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col" style="width: 150px;">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for invoice in invoices %}
+                                    {% for order in orders %}
                                     <tr>
-                                        <td>{{ invoice.id }}</td>
-                                        <td>{{ invoice.date }}</td>
-                                        <td>${{ invoice.total_amount }}</td>
+                                        <td>{{ order.id }}</td>
+                                        <td>{{ order.user.username }}</td>
                                         <td>
-                                            <a href="{% url 'dashboard:invoice_detail' invoice.id %}" class="btn btn-primary btn-sm">View</a>
+                                            <ul>
+                                                {% for item in order.items.all %}
+                                                <li>{{ item.quantity }} x {{ item.item.item_name }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        <td>${{ order.get_total }}</td>
+                                        <td>{{ order.ordered|yesno:"Ordered,Not Ordered" }}</td>
+                                        <td>
+                                            <a href="{% url 'dashboard:order_detail' order.id %}" class="btn btn-primary btn-sm">View</a>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -39,7 +50,7 @@
                         <div class="row mt-4">
                             <div class="col-sm-6">
                                 <div>
-                                    <p class="mb-sm-0">Showing 1 to {{ invoices|length }} of {{ invoices|length }} entries</p>
+                                    <p class="mb-sm-0">Showing 1 to {{ orders|length }} of {{ orders|length }} entries</p>
                                 </div>
                             </div>
                             <div class="col-sm-6">

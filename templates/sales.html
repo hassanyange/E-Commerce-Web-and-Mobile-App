@@ -1,35 +1,32 @@
 ﻿{% extends "base.html" %}
+{% load static %}
 
-{% block title %}Invoices{% endblock %}
+{% block title %}Sales Overview{% endblock %}
 
 {% block content %}
     <!-- Start right Content here -->
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
-                <h1>Invoices</h1>
+                <h1>Sales Overview</h1>
                 <div class="card">
                     <div class="card-body">
-                        <!-- Invoices Table -->
+                        <!-- Sales Table -->
                         <div class="table-responsive mb-4">
                             <table class="table table-hover table-nowrap align-middle mb-0">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col">Invoice ID</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Total Amount</th>
-                                        <th scope="col" style="width: 150px;">Actions</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Quantity Sold</th>
+                                        <th scope="col">Total Sales</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for invoice in invoices %}
+                                    {% for sale in sales %}
                                     <tr>
-                                        <td>{{ invoice.id }}</td>
-                                        <td>{{ invoice.date }}</td>
-                                        <td>${{ invoice.total_amount }}</td>
-                                        <td>
-                                            <a href="{% url 'dashboard:invoice_detail' invoice.id %}" class="btn btn-primary btn-sm">View</a>
-                                        </td>
+                                        <td>{{ sale.item_name }}</td>
+                                        <td>{{ sale.total_quantity }}</td>
+                                        <td>${{ sale.total_sales }}</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -39,7 +36,7 @@
                         <div class="row mt-4">
                             <div class="col-sm-6">
                                 <div>
-                                    <p class="mb-sm-0">Showing 1 to {{ invoices|length }} of {{ invoices|length }} entries</p>
+                                    <p class="mb-sm-0">Showing 1 to {{ sales|length }} of {{ sales|length }} entries</p>
                                 </div>
                             </div>
                             <div class="col-sm-6">
