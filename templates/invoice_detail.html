@@ -1,17 +1,47 @@
-﻿{% extends 'base.html' %}
+﻿{% extends "base.html" %}
 
 {% block title %}Invoice Detail{% endblock %}
 
 {% block content %}
-<h1>Invoice Detail</h1>
-<p>Invoice ID: {{ invoice.id }}</p>
-<p>User: {{ invoice.user.username }}</p>
-<p>Date: {{ invoice.date }}</p>
-<p>Total Amount: ${{ invoice.total_amount }}</p>
-<h2>Order Items</h2>
-<ul>
-    {% for item in invoice.order.items.all %}
-    <li>{{ item.quantity }} x {{ item.item.item_name }}: ${{ item.get_final_price }}</li>
-    {% endfor %}
-</ul>
+    <!-- Start right Content here -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <h1>Invoice Detail</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Invoice Information -->
+                        <div class="mb-4">
+                            <p><strong>Invoice ID:</strong> {{ invoice.id }}</p>
+                            <p><strong>User:</strong> {{ invoice.user.username }}</p>
+                            <p><strong>Date:</strong> {{ invoice.date }}</p>
+                            <p><strong>Total Amount:</strong> ${{ invoice.total_amount }}</p>
+                        </div>
+                        <!-- Order Items -->
+                        <h2>Order Items</h2>
+                        <ul class="list-group">
+                            {% for item in invoice.order.items.all %}
+                            <li class="list-group-item">
+                                {{ item.quantity }} x {{ item.item.item_name }}: ${{ item.get_final_price }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <script>document.write(new Date().getFullYear())</script> © YourCompanyName.
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer -->
+    </div>
+    <!-- End Main Content -->
 {% endblock %}
