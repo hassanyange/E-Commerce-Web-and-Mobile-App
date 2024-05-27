@@ -10,8 +10,11 @@ def index(request):
 
 
 def add_customer(request):
-    if request.method == 'POST':
-        form = CustomerForm(request.POST, request.FILES)
+    if request.method == 'GET':
+        form = CustomerForm()
+        return render(request, 'users-list.html', {'form': form})
+    elif request.method == 'POST':
+        form = CustomerForm()
         if form.is_valid():
             form.save()
             # Redirect to a success page or any other view after adding the customer
