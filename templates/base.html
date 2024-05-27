@@ -240,7 +240,7 @@
                         </span>
                     </a>
 
-                    <a href="index.html" class="logo logo-light">
+                    <a href="{% url 'index' % }" class="logo logo-light">
                         <span class="logo-sm">
                         <img src="{% static 'assets/images/logo-sm-light.png' %}" alt="logo-sm-light" height="24">
                         </span>
@@ -271,8 +271,8 @@
                          <ul class="metismenu list-unstyled" id="side-menu">
 
                             <li>
-                                <a href="index.html" class="waves-effect">
-                                    <i class="uim uim-airplay"></i><span class="badge rounded-pill bg-success float-end">3</span>
+                                <a href="{% url 'index' % }" class="waves-effect">
+                                    <!-- <i class="uim uim-airplay"></i><span class="badge rounded-pill bg-success float-end">3</span> -->
                                     <span>Dashboard</span>
                                 </a>
                             </li>
@@ -334,9 +334,9 @@
                                 <ul class="sub-menu" aria-expanded="true">
                                  
 
-                                    <li><a href="calendar.html">Sales Report</a></li>
+                                    <li><a href="#">Sales Report</a></li>
 
-                                    <li><a href="apps-chat.html">User Engagement</a></li>
+                                    <li><a href="#">User Engagement</a></li>
 
 
                                 </ul>
@@ -349,9 +349,9 @@
                                 <ul class="sub-menu" aria-expanded="true">
                                  
 
-                                    <li><a href="calendar.html">System Settings</a></li>
+                                    <li><a href="#">System Settings</a></li>
 
-                                    <li><a href="apps-chat.html">Customization</a></li>
+                                    <li><a href="#">Customization</a></li>
 
 
                                 </ul>
@@ -364,9 +364,9 @@
                                 <ul class="sub-menu" aria-expanded="true">
                                  
 
-                                    <li><a href="calendar.html">Help Center</a></li>
+                                    <li><a href="#">Help Center</a></li>
 
-                                    <li><a href="apps-chat.html">Feedbacks</a></li>
+                                    <li><a href="#">Feedbacks</a></li>
 
                                     
                                 </ul>
