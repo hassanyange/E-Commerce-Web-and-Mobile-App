@@ -23,6 +23,7 @@
     <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
         <!-- App Css-->
     <link href="{% static 'assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css">
+    
 
 
 
@@ -217,10 +218,13 @@
                         </div>
 
                         <div class="dropdown d-inline-block">
-                            <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
-                                <i class="ri-settings-2-line"></i>
-                            </button>
+                            <a href="{% url 'settings' %}">
+                                <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
+                                    <i class="ri-settings-2-line"></i>
+                                </button>
+                            </a>
                         </div>
+                        
             
                     </div>
                 </div>
@@ -351,7 +355,7 @@
 
                                     <li><a href="{% url 'settings'%}">System Settings</a></li>
 
-                                    <li><a href="#">Customization</a></li>
+                              
 
 
                                 </ul>
@@ -437,7 +441,7 @@
         <div data-simplebar="" class="h-100">
             <div class="rightbar-title d-flex align-items-center px-3 py-4">
         
-                <h5 class="m-0 me-2">Settings</h5>
+                <h5 class="m-0 me-2"><Settings></h5>
 
                 <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
                     <i class="mdi mdi-close noti-icon"></i>
