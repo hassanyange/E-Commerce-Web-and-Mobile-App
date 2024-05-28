@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Page</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    margin-bottom: 20px;
+}
+
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+
+.profile-picture .upload-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user-settings {
+    text-align: left;
+}
+
+.user-settings label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.user-settings input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Settings</h1>
+        <form id="settingsForm">
+            <div class="profile-picture">
+                <img id="profileImage" src="default-profile.png" alt="Profile Picture">
+                <input type="file" id="profilePictureInput" accept="image/*">
+                <label for="profilePictureInput" class="upload-button">Change Profile Picture</label>
+            </div>
+            <div class="user-settings">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="company">Company</label>
+                <input type="text" id="company" name="company">
+
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone">
+
+                <button type="submit">Save Changes</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById('profilePictureInput').addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            document.getElementById('profileImage').setAttribute('src', event.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+document.getElementById('settingsForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Here you can handle the form submission, e.g., send the data to the server
+    alert('Settings saved successfully!');
+});
+
+    </script>
+</body>
+</html>

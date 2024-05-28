@@ -61,13 +61,13 @@ def edit_user(request, user_id):
 
 
 
-@login_required
+# @login_required
 def manage_orders(request):
     orders = Cart.objects.filter(ordered=True)
     context = {'orders': orders}
     return render(request, 'orders.html', context)
 
-@login_required
+# @login_required
 def sales_overview(request):
     # Assuming you want to aggregate sales data
     sales = Item.objects.all()  # Customize this query based on your sales logic
@@ -86,22 +86,22 @@ def sales_overview(request):
 
 
 
-@login_required
+# @login_required
 def invoice_list(request):
     invoices = Invoice.objects.filter(user=request.user)
     return render(request, 'invoices.html', {'invoices': invoices})
 
-@login_required
+# @login_required
 def invoice_detail(request, id):
     invoice = get_object_or_404(Invoice, id=id, user=request.user)
     return render(request, 'invoice_detail.html', {'invoice': invoice})
 
-@login_required
+# @login_required
 def payment_list(request):
     payments = Payment.objects.filter(user=request.user)
     return render(request, 'payments.html', {'payments': payments})
 
-@login_required
+# @login_required
 def make_payment(request):
     if request.method == 'POST':
         form = PaymentForm(request.POST)
@@ -121,3 +121,6 @@ def userslist(request):
 
 def materiaslist(request):
     return render(request, 'materials.html')
+
+def settings(request):
+    return render(request, 'settings.html')
