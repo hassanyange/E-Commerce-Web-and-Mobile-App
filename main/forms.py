@@ -11,7 +11,7 @@ class ItemForm(forms.ModelForm):
         model = Item
         fields = [
             'item_name', 'category', 'price', 'discount_price',
-            'item_image', 'labels', 'slug', 'description'
+            'item_image', 'labels',  'description'
         ]
 
 

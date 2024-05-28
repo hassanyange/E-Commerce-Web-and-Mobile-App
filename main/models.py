@@ -40,10 +40,7 @@ class Category(models.Model):
     def __str__(self):
         return self.category
 
-    def get_absolute_url(self):
-        return reverse("core:item_list_by_category", kwargs={
-            "category_name": self.category
-        })
+
 
 class Item(models.Model):
     item_name = models.CharField(max_length=100)
@@ -52,21 +49,13 @@ class Item(models.Model):
     discount_price = models.FloatField(blank=True, null=True)
     item_image = models.ImageField(upload_to='items_images/')
     labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
-    slug = models.SlugField(unique=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
     description = models.TextField()
 
     def __str__(self):
         return self.item_name
 
-    def get_absolute_url(self):
-        return reverse('core:products', kwargs={'slug': self.slug})
-
-    def get_add_to_cart_url(self):
-        return reverse('core:add_to_cart', kwargs={'slug': self.slug})
-
-    def get_remove_from_cart_url(self):
-        return reverse('core:remove_from_cart', kwargs={'slug':self.slug})
+   
 
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -77,18 +66,7 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.quantity} of {self.item.item_name}"
 
-    def get_total_price(self):
-        return self.item.price * self.quantity
-    
-    def get_total_discount_price(self):
-        return self.item.discount_price * self.quantity
-
-    def get_final_price(self):
-        if self.item.discount_price:
-            return self.get_total_discount_price()
-        else:
-            return self.get_total_price()
-
+   
 class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     items = models.ManyToManyField(OrderItem)
@@ -110,13 +88,7 @@ class Cart(models.Model):
     def __str__(self):
         return self.user.username
 
-    def get_total(self):
-        total = 0
-        for order_item in self.items.all():
-            total += order_item.get_final_price()
-        if self.coupon:
-            total -= self.coupon.amount
-        return total
+ 
 
 class Address(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -187,21 +159,12 @@ class RawMaterial(models.Model):
     discount_price = models.FloatField(blank=True, null=True)
     image = models.ImageField(upload_to='items_images/')
     labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
-    slug = models.SlugField(unique=True)
     description = models.TextField()
 
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('core:raw_material_detail', kwargs={'slug': self.slug})
-
-    def get_add_to_cart_url(self):
-        return reverse('core:add_raw_material_to_cart', kwargs={'slug': self.slug})
-
-    def get_remove_from_cart_url(self):
-        return reverse('core:remove_raw_material_from_cart', kwargs={'slug': self.slug})
-
+  
 
 class BuildingSupply(models.Model):
     name = models.CharField(max_length=100)
@@ -210,20 +173,10 @@ class BuildingSupply(models.Model):
     discount_price = models.FloatField(blank=True, null=True)
     image = models.ImageField(upload_to='items_images/')
     labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
-    slug = models.SlugField(unique=True)
     description = models.TextField()
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return reverse('core:building_supply_detail', kwargs={'slug': self.slug})
-
-    def get_add_to_cart_url(self):
-        return reverse('core:add_building_supply_to_cart', kwargs={'slug': self.slug})
-
-    def get_remove_from_cart_url(self):
-        return reverse('core:remove_building_supply_from_cart', kwargs={'slug': self.slug})
 
 
 class ConstructionEquipment(models.Model):
@@ -233,20 +186,12 @@ class ConstructionEquipment(models.Model):
     discount_price = models.FloatField(blank=True, null=True)
     image = models.ImageField(upload_to='items_images/')
     labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
-    slug = models.SlugField(unique=True)
     description = models.TextField()
 
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('core:construction_equipment_detail', kwargs={'slug': self.slug})
-
-    def get_add_to_cart_url(self):
-        return reverse('core:add_construction_equipment_to_cart', kwargs={'slug': self.slug})
-
-    def get_remove_from_cart_url(self):
-        return reverse('core:remove_construction_equipment_from_cart', kwargs={'slug': self.slug})
+   
 
 
 class ArchitecturalProduct(models.Model):
@@ -256,17 +201,9 @@ class ArchitecturalProduct(models.Model):
     discount_price = models.FloatField(blank=True, null=True)
     image = models.ImageField(upload_to='items_images/')
     labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
-    slug = models.SlugField(unique=True)
     description = models.TextField()
 
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('core:architectural_product_detail', kwargs={'slug': self.slug})
-
-    def get_add_to_cart_url(self):
-        return reverse('core:add_architectural_product_to_cart', kwargs={'slug': self.slug})
-
-    def get_remove_from_cart_url(self):
-        return reverse('core:remove_architectural_product_from_cart', kwargs={'slug': self.slug})
+   
