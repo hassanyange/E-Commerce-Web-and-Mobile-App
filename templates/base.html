@@ -24,6 +24,8 @@
         <!-- App Css-->
     <link href="{% static 'assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css">
     
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/unicons.css" rel="stylesheet">
+
 
 
 
@@ -237,19 +239,19 @@
                  <div class="navbar-brand-box">
                     <a href="index.html" class="logo logo-dark">
                         <span class="logo-sm">
-                        <img src="{% static 'assets/images/logo-sm-dark.png' %}" alt="logo-sm-dark" height="24">
+                        <img src="{% static 'assets/images/B2B.png' %}" alt="logo-sm-dark" height="24">
                         </span>
                         <span class="logo-lg">
-                        <img src="{% static 'assets/images/logo-dark.png' %}" alt="logo-dark" height="22">
+                        <img src="{% static 'assets/images/B2B.png' %}" alt="logo-dark" height="22">
                         </span>
                     </a>
 
                     <a href="{% url 'index' % }" class="logo logo-light">
                         <span class="logo-sm">
-                        <img src="{% static 'assets/images/logo-sm-light.png' %}" alt="logo-sm-light" height="24">
+                        <img src="{% static 'assets/images/B2B.png' %}" alt="logo-sm-light" height="24">
                         </span>
                         <span class="logo-lg">
-                        <img src="{% static 'assets/images/logo-light.png' %}" alt="logo-light" height="22">
+                        <img src="{% static 'assets/images/B2B.png' %}" alt="logo-light" height="22">
                         </span>
                     </a>
                 </div>
@@ -292,10 +294,10 @@
                                  
 
                                     <li>
-                                        <a href="javascript: void(0);" class="has-arrow">User Management</a>
+                                        <a href="{% url 'userslist' %}" class="has-arrow">User Management</a>
                                         <ul class="sub-menu" aria-expanded="false">
                                             <li><a href="{% url 'userslist' %}">Users List</a></li>
-                                            <li><a href="users-detail.html">Users Detail</a></li>
+                                            <li><a href="#">Users Detail</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -509,6 +511,30 @@
 
     <!-- App js -->
     <script src="{% static 'assets/js/app.js' %}"></script>
+
+
+    <!-- Add jQuery and Bootstrap JS in your project -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        // Toggle sidebar dropdowns
+        $('.has-arrow').click(function(){
+            $(this).toggleClass('open').next('.sub-menu').slideToggle(200);
+            $('.has-arrow').not(this).removeClass('open').next('.sub-menu').slideUp(200);
+        });
+
+        // Close dropdown menu on click outside
+        $(document).click(function(e) {
+            var container = $(".dropdown-menu");
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                container.removeClass('show');
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html> 
