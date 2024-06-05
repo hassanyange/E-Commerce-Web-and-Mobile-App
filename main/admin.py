@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import UserProfile, Category, Invoice, Customer, Item, OrderItem, Cart, Address, Payment, Coupon, Refund, Comment, RawMaterial, BuildingSupply, ConstructionEquipment, ArchitecturalProduct
+from .models import  Category, Invoice, Customer, Item, OrderItem, Cart, Address, Payment, Order
 
-admin.site.register(UserProfile)
 admin.site.register(Category)
 admin.site.register(Item)
 admin.site.register(OrderItem)
@@ -10,10 +9,11 @@ admin.site.register(Address)
 admin.site.register(Invoice)
 admin.site.register(Payment)
 admin.site.register(Customer)
-admin.site.register(Coupon)
-admin.site.register(Refund)
-admin.site.register(Comment)
-admin.site.register(RawMaterial)
-admin.site.register(BuildingSupply)
-admin.site.register(ConstructionEquipment)
-admin.site.register(ArchitecturalProduct)
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('customer_name', 'product_name', 'status', 'estimated_delivery_date')
+    list_filter = ('status',)
+    search_fields = ('customer_name', 'product_name')
+    ordering = ('-estimated_delivery_date',)
+
+admin.site.register(Order, OrderAdmin)

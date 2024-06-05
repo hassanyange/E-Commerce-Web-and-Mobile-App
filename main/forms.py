@@ -1,5 +1,5 @@
 from django import forms
-from .models import Customer, Category, Item, Payment
+from .models import Customer, Category, Item, Payment, Order
 
 class CategoryForm(forms.ModelForm):
     class Meta:
@@ -10,22 +10,22 @@ class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = [
-            'item_name', 'category', 'price', 'discount_price',
-            'item_image', 'labels',  'description'
+            'item_name', 'category', 'price', 
+            'item_image',   'description', 'seller_name'
         ]
 
 
-class PaymentForm(forms.ModelForm):
-    class Meta:
-        model = Payment
-        fields = ['amount']
 
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = ['name', 'email', 'location', 'picture', 'phone_number']
+        fields = ['username', 'email', 'location', 'phone_number']
         widgets = {
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
-            'picture': forms.FileInput(attrs={'class': 'form-control-file'})
         }
+
+class OrderStatusForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['status', 'estimated_delivery_date']

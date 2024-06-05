@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
-from .forms import CustomerForm, CategoryForm, ItemForm, PaymentForm
+from .forms import CustomerForm, CategoryForm, ItemForm, OrderStatusForm
 from .models import *
 
 
@@ -101,19 +101,10 @@ def payment_list(request):
     payments = Payment.objects.filter(user=request.user)
     return render(request, 'payments.html', {'payments': payments})
 
-# @login_required
-def make_payment(request):
-    if request.method == 'POST':
-        form = PaymentForm(request.POST)
-        if form.is_valid():
-            payment = form.save(commit=False)
-            payment.user = request.user
-            payment.successful = True  # This would normally be set by your payment gateway
-            payment.save()
-            return redirect('dashboard:payments')
-    else:
-        form = PaymentForm()
-    return render(request, 'make_payment.html', {'form': form})
+
+def order_status(request, id):
+    order = get_object_or_404(Order, id=id, user=request.user )
+    return render(request, 'order_status.html', {'order': order})
 
 
 def userslist(request):
