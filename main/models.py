@@ -38,6 +38,11 @@ class Item(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     price = models.FloatField()
     item_image = models.ImageField(upload_to='items_images/')
+<<<<<<< Updated upstream
+=======
+    labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
+>>>>>>> Stashed changes
     description = models.TextField()
     seller_name = models.CharField(max_length=100, default="john")
 
@@ -139,3 +144,61 @@ class Order(models.Model):
 # Signal to create user profile every time a new user is created
 
 
+<<<<<<< Updated upstream
+=======
+class RawMaterial(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    price = models.FloatField()
+    discount_price = models.FloatField(blank=True, null=True)
+    image = models.ImageField(upload_to='items_images/')
+    labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+  
+
+class BuildingSupply(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    price = models.FloatField()
+    discount_price = models.FloatField(blank=True, null=True)
+    image = models.ImageField(upload_to='items_images/')
+    labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
+class ConstructionEquipment(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    price = models.FloatField()
+    discount_price = models.FloatField(blank=True, null=True)
+    image = models.ImageField(upload_to='items_images/')
+    labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+   
+
+
+class ArchitecturalProduct(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    price = models.FloatField()
+    discount_price = models.FloatField(blank=True, null=True)
+    image = models.ImageField(upload_to='items_images/')
+    labels = models.CharField(choices=LABEL_CHOICES, max_length=2)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+   
+>>>>>>> Stashed changes

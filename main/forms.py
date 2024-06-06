@@ -10,8 +10,13 @@ class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = [
+<<<<<<< Updated upstream
             'item_name', 'category', 'price', 
             'item_image',   'description', 'seller_name'
+=======
+            'item_name', 'category', 'price', 'discount_price',
+            'item_image', 'labels',  'description'
+>>>>>>> Stashed changes
         ]
 
 
