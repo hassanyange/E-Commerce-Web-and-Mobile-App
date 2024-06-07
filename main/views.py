@@ -1,26 +1,53 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login, logout 
 from django.contrib import messages
-from .forms import CustomerForm, CategoryForm, ItemForm, OrderStatusForm
+from .forms import CustomerForm, CategoryForm, ItemForm, OrderStatusForm,LoginForm,CreateUserForm
 from .models import *
 
 
 
 def signin(request):
+    if request.method == 'GET':
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form})
+    elif request.method == 'POST':
+        form = LoginForm(request.POST)
+        
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request,username=username,password=password)
+            if user:
+                login(request, user)
+                # messages.success(request,f'Hi {username.title()}, welcome back!')
+                return redirect('index')
+        
+        # form is not valid or user is not authenticated
+        messages.error(request,f'Invalid username or password')
+        return render(request,'login.html',{'form': form})
+ 
+    
+def register(request):
+    if request.method == 'GET':
+        form = CreateUserForm()
+        return render(request, 'register.html', { 'form': form})
+    
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            auth_login(request, user)
-            return redirect('index')  # Use the name defined in the URL pattern
-        else:
-            messages.error(request, 'Invalid credentials')
-            return redirect('login')  # Use the name defined in the URL pattern
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'user account succesful created')
+            return redirect('login')
+            
+        else: 
+            context = {'form':form}
+            return render(request, 'register.html', context)
 
-    return render(request, 'login.html')
-
+def sign_out(request):
+    logout(request)
+    # messages.success(request,f'You have been logged out.')
+    return redirect('login') 
 
 
 # @login_required
