@@ -55,26 +55,40 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.quantity} of {self.item.item_name}"
 
-   
 class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     items = models.ManyToManyField(OrderItem)
-    billing_address = models.ForeignKey('Address', related_name='billing_address',
-                                        on_delete=models.SET_NULL, blank=True, null=True)
-    shipping_address = models.ForeignKey('Address', related_name='shipping_address',
-                                         on_delete=models.SET_NULL, blank=True, null=True)
+    billing_address = models.ForeignKey('Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
+    shipping_address = models.ForeignKey('Address', related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
     payment = models.ForeignKey('Payment', models.SET_NULL, blank=True, null=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
     being_delivered = models.BooleanField(default=False)
     received = models.BooleanField(default=False)
 
-
     def __str__(self):
         return self.user.username
 
- 
+    def get_total(self):
+        total = sum([item.item.price * item.quantity for item in self.items.all()])
+        return total
 
+class Order(models.Model):
+    STATUS_CHOICES = [
+        ('confirmed', 'Order Confirmation'),
+        ('shipped', 'Order Shipment'),
+        ('estimated_delivery', 'Estimated Delivery Time'),
+        ('delivered', 'Delivery Update Feedback Request'),
+    ]
+
+    customer_name = models.CharField(max_length=100)
+    product_name = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='confirmed')
+    estimated_delivery_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.product_name} for {self.customer_name}"
+    
 class Address(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     street_address = models.CharField(max_length=100)

@@ -135,10 +135,34 @@ def order_status(request, id):
 
 
 def userslist(request):
-    return render(request,'users-list.html')
+    # Retrieve all customers from the database
+    customers = Customer.objects.all()
+    return render(request, 'users-list.html', {'customers': customers})
 
-def materiaslist(request):
-    return render(request, 'materials.html')
+
+def item_list(request):
+    items = Item.objects.all()
+    categories = Category.objects.all()
+    return render(request, 'item.html', {'items': items, 'categories': categories})
+
+def add_item(request):
+    if request.method == 'POST':
+        item_name = request.POST['item_name']
+        category_id = request.POST['category']
+        price = request.POST['price']
+        description = request.POST['description']
+        seller_name = request.POST['seller_name']
+        item_image = request.FILES['item_image']
+
+        category = Category.objects.get(id=category_id)
+        new_item = Item(item_name=item_name, category=category, price=price, description=description, seller_name=seller_name, item_image=item_image)
+        new_item.save()
+        return redirect('item_list')
+    else:
+        categories = Category.objects.all()
+        return render(request, 'addItem.html', {'categories': categories})
+
+
 
 def settings(request):
     return render(request, 'settings.html')
