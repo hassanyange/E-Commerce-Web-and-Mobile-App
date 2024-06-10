@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib import messages
+from django.db.models import Sum
 from .forms import CustomerForm, CategoryForm, ItemForm, OrderStatusForm,LoginForm,CreateUserForm
 from .models import *
 
@@ -100,6 +101,7 @@ def sales_overview(request):
     sales = Item.objects.all()  # Customize this query based on your sales logic
     sales_data = []
     for item in sales:
+        # Use Django's Sum function to aggregate quantity
         total_quantity = OrderItem.objects.filter(item=item).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
         total_sales = total_quantity * item.price
         sales_data.append({
@@ -109,8 +111,6 @@ def sales_overview(request):
         })
     context = {'sales': sales_data}
     return render(request, 'sales.html', context)
-
-
 
 
 # @login_required
