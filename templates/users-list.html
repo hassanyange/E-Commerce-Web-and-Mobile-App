@@ -23,11 +23,12 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 float-end">
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
+                                            <a href="{% url 'add_customer' %}" class="btn btn-primary">
                                                 <i class="mdi mdi-plus me-1"></i> Add Customer
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
+                                    
                                 </div>
                                 <!-- Table -->
                                 <div class="table-responsive mb-4">
@@ -123,29 +124,7 @@
             </div>
         </div>
 
-        <!-- Add Customer Modal -->
-        <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addCustomerModalLabel">Add Customer</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Customer Form -->
-                        <form method="post" enctype="multipart/form-data" action="{% url 'add_customer' %}">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Add</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Add Customer Modal -->
+      
         
         <!-- Footer -->
         <footer class="footer">

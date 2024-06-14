@@ -59,7 +59,7 @@ def index(request):
 def add_customer(request):
     if request.method == 'GET':
         form = CustomerForm()
-        return render(request, 'users-list.html', {'form': form})
+        return render(request, 'add_customer.html', {'form': form})
     elif request.method == 'POST':
         form = CustomerForm()
         if form.is_valid():
@@ -68,7 +68,9 @@ def add_customer(request):
             return redirect('userlist')  
     else:
         form = CustomerForm()
-    return render(request, 'users-list.html', {'form': form})
+    return render(request, 'add_customer.html', {'form': form})
+
+
 
 def edit_user(request, user_id):
     # Get the user object from the database
