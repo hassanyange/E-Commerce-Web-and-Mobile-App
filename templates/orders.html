@@ -11,15 +11,33 @@
             <h1>Manage Orders</h1>
             <div class="card">
                 <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <div class="form-inline float-md-start mb-3">
+                                <div class="search-box me-2">
+                                    <div class="position-relative">
+                                        <input type="text" class="form-control border" placeholder="Search...">
+                                        <i class="ri-search-line search-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3 float-end">
+                                <a href="{% url 'add_customer' %}" class="btn btn-primary">
+                                    <i class="mdi mdi-plus me-1"></i> Add Orders
+                                </a>
+                            </div>
+                        </div>
                     <!-- Orders Table -->
                     <div class="table-responsive mb-4">
                         <table class="table table-hover table-nowrap align-middle mb-0">
                             <thead class="bg-light">
                                 <tr>
                                     <th scope="col">Order ID</th>
-                                    <th scope="col">User</th>
-                                    <th scope="col">Items</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col">Customer Name</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Estimated Delivery Date</th>
                                     <th scope="col">Status</th>
                                     <th scope="col" style="width: 150px;">Actions</th>
                                 </tr>
@@ -28,18 +46,12 @@
                                 {% for order in orders %}
                                 <tr>
                                     <td>{{ order.id }}</td>
-                                    <td>{{ order.user.username }}</td>
+                                    <td>{{ order.customer_name }}</td>
+                                    <td>{{ order.product_name }}</td>
+                                    <td>{{ order.estimated_delivery_date }}</td>
+                                    <td>{{ order.get_status_display }}</td>
                                     <td>
-                                        <ul>
-                                            {% for item in order.items.all %}
-                                            <li>{{ item.quantity }} x {{ item.item.item_name }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    </td>
-                                    <td>${{ order.get_total }}</td>
-                                    <td>{{ order.ordered|yesno:"Ordered,Not Ordered" }}</td>
-                                    <td>
-                                        <a href="{% url 'dashboard:order_detail' order.id %}" class="btn btn-primary btn-sm">View</a>
+                                        <a href="{% url 'orders' %}" class="btn btn-primary btn-sm">View</a>
                                     </td>
                                 </tr>
                                 {% endfor %}

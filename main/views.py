@@ -93,8 +93,10 @@ def edit_user(request, user_id):
 
 # @login_required
 def manage_orders(request):
-    orders = Cart.objects.filter(ordered=True)
-    context = {'orders': orders}
+    orders = Order.objects.all()
+    context = {
+        'orders': orders
+    }
     return render(request, 'orders.html', context)
 
 # @login_required
