@@ -1,19 +1,11 @@
 from django.contrib import admin
-from .models import  Category, Invoice, Customer, Item, OrderItem, Cart, Address, Payment, Order
+from .models import Order, Invoice, Payment, Comment, Customer, Category, Item, Address
 
-admin.site.register(Category)
-admin.site.register(Item)
-admin.site.register(OrderItem)
-admin.site.register(Cart)
-admin.site.register(Address)
+admin.site.register(Order)
 admin.site.register(Invoice)
 admin.site.register(Payment)
+admin.site.register(Comment)
 admin.site.register(Customer)
-
-class OrderAdmin(admin.ModelAdmin):
-    list_display = ('customer_name', 'product_name', 'status', 'estimated_delivery_date')
-    list_filter = ('status',)
-    search_fields = ('customer_name', 'product_name')
-    ordering = ('-estimated_delivery_date',)
-
-admin.site.register(Order, OrderAdmin)
+admin.site.register(Category)
+admin.site.register(Item)
+admin.site.register(Address)

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Add Order{% endblock %}
+
+{% block content %}
+<!-- Start right Content here -->
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <h1>Add New Order</h1>
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="customer_name" class="form-label">Customer Name</label>
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product_name" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="product_name" name="product_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="billing_address" class="form-label">Billing Address</label>
+                            <textarea class="form-control" id="billing_address" name="billing_address" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shipping_address" class="form-label">Shipping Address</label>
+                            <textarea class="form-control" id="shipping_address" name="shipping_address" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="payment" class="form-label">Payment</label>
+                            <input type="text" class="form-control" id="payment" name="payment">
+                        </div>
+                        <div class="mb-3">
+                            <label for="estimated_delivery_date" class="form-label">Estimated Delivery Date</label>
+                            <input type="date" class="form-control" id="estimated_delivery_date" name="estimated_delivery_date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="confirmed">Confirmed</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Main Content -->
+{% endblock %}

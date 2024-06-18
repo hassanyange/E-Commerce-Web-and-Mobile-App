@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Sum
 from .forms import CustomerForm, CategoryForm, ItemForm, OrderStatusForm,LoginForm,CreateUserForm
+from .forms import OrderForm  
 from .models import *
 
 
@@ -89,7 +90,19 @@ def edit_user(request, user_id):
         form = CustomerForm(instance=user)
 
 
-
+def add_order(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('manage_orders')  # Redirect to manage_orders view after successfully adding order
+    else:
+        form = OrderForm()
+    
+    context = {
+        'form': form,
+    }
+    return render(request, 'add_order.html', context)
 
 # @login_required
 def manage_orders(request):
@@ -106,7 +119,7 @@ def sales_overview(request):
     sales_data = []
     for item in sales:
         # Use Django's Sum function to aggregate quantity
-        total_quantity = OrderItem.objects.filter(item=item).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+        total_quantity = Order.objects.filter(item=item).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
         total_sales = total_quantity * item.price
         sales_data.append({
             'item_name': item.item_name,

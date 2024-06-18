@@ -3,16 +3,13 @@ from django.db.models.signals import post_save
 from django.conf import settings
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 CATEGORY_CHOICES = (
     ('Roofing Materials', 'Roofing Materials'),
     ('Structural materials', 'Structural materials'),
     ('Plumbing and Electrical Materials', 'Plumbing and Electrical Materials')
 )
-
-
-
-
 
 
 class Customer(models.Model):
@@ -46,32 +43,6 @@ class Item(models.Model):
 
    
 
-class OrderItem(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    ordered = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"{self.quantity} of {self.item.item_name}"
-
-class Cart(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    items = models.ManyToManyField(OrderItem)
-    billing_address = models.ForeignKey('Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
-    shipping_address = models.ForeignKey('Address', related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
-    payment = models.ForeignKey('Payment', models.SET_NULL, blank=True, null=True)
-    ordered_date = models.DateTimeField()
-    ordered = models.BooleanField(default=False)
-    being_delivered = models.BooleanField(default=False)
-    received = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.user.username
-
-    def get_total(self):
-        total = sum([item.item.price * item.quantity for item in self.items.all()])
-        return total
 
 class Order(models.Model):
     STATUS_CHOICES = [
@@ -81,27 +52,37 @@ class Order(models.Model):
         ('delivered', 'Delivery Update Feedback Request'),
     ]
 
-    customer_name = models.CharField(max_length=100)
-    product_name = models.CharField(max_length=100)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='Hosanah')
+    items = models.ManyToManyField('Item')
+    billing_address = models.ForeignKey('Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
+    shipping_address = models.ForeignKey('Address', related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
+    payment = models.ForeignKey('Payment', models.SET_NULL, blank=True, null=True)
+    ordered_date = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='confirmed')
     estimated_delivery_date = models.DateField(null=True, blank=True)
+    customer_name = models.CharField(max_length=100)
+    product_name = models.CharField(max_length=100)
 
     def __str__(self):
         return f"{self.product_name} for {self.customer_name}"
+
+    def get_total(self):
+        total = sum([item.item.price * item.quantity for item in self.items.all()])
+        return total
     
 class Address(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     street_address = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=100)
-    address_type = models.CharField(max_length=1,)
     is_default = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
 
+
 class Invoice(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    order = models.OneToOneField(Cart, on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
 
@@ -129,24 +110,7 @@ class Comment(models.Model):
         return self.comment
 
 
-# models.py
-from django.db import models
 
-class Order(models.Model):
-    STATUS_CHOICES = [
-        ('confirmed', 'Order Confirmation'),
-        ('shipped', 'Order Shipment'),
-        ('estimated_delivery', 'Estimated Delivery Time'),
-        ('delivered', 'Delivery Update Feedback Request'),
-    ]
-
-    customer_name = models.CharField(max_length=100)
-    product_name = models.CharField(max_length=100)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='confirmed')
-    estimated_delivery_date = models.DateField(null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.product_name} for {self.customer_name}"
 
 
 

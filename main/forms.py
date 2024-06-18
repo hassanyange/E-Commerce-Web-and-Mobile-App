@@ -19,7 +19,7 @@ class ItemForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=65)
     password = forms.CharField(max_length=65, widget=forms.PasswordInput)
-    
+
 class CreateUserForm(UserCreationForm):
    
 
@@ -41,3 +41,11 @@ class OrderStatusForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['status', 'estimated_delivery_date']
+
+
+from .models import Order
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['customer_name', 'product_name', 'billing_address', 'shipping_address', 'payment', 'estimated_delivery_date', 'status']
