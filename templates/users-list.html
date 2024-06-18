@@ -26,7 +26,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 float-end">
-                                            <a href="{% url 'add_customer' %}" class="btn btn-primary">
+                                            <a href="{% url 'add_user' %}" class="btn btn-primary">
                                                 <i class="mdi mdi-plus me-1"></i> Add User
                                             </a>
                                         </div>
@@ -57,10 +57,10 @@
                                                 <td>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
-                                                            <a href="{% url 'edit_user' customer.id %}" class="px-2 text-primary"><i class="ri-pencil-line font-size-18"></i></a>
+                                                            <a href="{% url 'edit_user' user.id %}" class="px-2 text-primary"><i class="ri-pencil-line font-size-18"></i></a>
                                                         </li>
                                                         <li class="list-inline-item">
-                                                            <a href="javascript:void(0);" class="px-2 text-danger"><i class="ri-delete-bin-line font-size-18"></i></a>
+                                                            <a href="{%url 'delete_user' user.id %}" class="px-2 text-danger"><i class="ri-delete-bin-line font-size-18"></i></a>
                                                         </li>
                                                     </ul>
                                                 </td>

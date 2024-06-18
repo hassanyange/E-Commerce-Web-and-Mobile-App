@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Add Order{% endblock %}
+{% block title %}Edit Order{% endblock %}
 
 {% block content %}
 <div class="main-content">
@@ -11,66 +11,66 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title mb-4">Add Order</h4>
+                            <h4 class="card-title mb-4">Edit Order</h4>
                             <!-- Order Form -->
                             <form method="post">
                                 {% csrf_token %}
                                 <div class="mb-3 row">
                                     <label for="customer_name" class="col-sm-2 col-form-label">Customer Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter customer name">
+                                        <input type="text" class="form-control" id="customer_name" name="customer_name" value="{{ order.customer_name }}">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="product_name" class="col-sm-2 col-form-label">Product Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter product name">
+                                        <input type="text" class="form-control" id="product_name" name="product_name" value="{{ order.product_name }}">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="billing_address" class="col-sm-2 col-form-label">Billing Address</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="billing_address" name="billing_address" placeholder="Enter billing address">
+                                        <input type="text" class="form-control" id="billing_address" name="billing_address" value="{{ order.billing_address }}">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="shipping_address" class="col-sm-2 col-form-label">Shipping Address</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="shipping_address" name="shipping_address" placeholder="Enter shipping address">
+                                        <input type="text" class="form-control" id="shipping_address" name="shipping_address" value="{{ order.shipping_address }}">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="payment" class="col-sm-2 col-form-label">Payment</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="payment" name="payment" placeholder="Enter payment details">
+                                        <input type="text" class="form-control" id="payment" name="payment" value="{{ order.payment }}">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="ordered_date" class="col-sm-2 col-form-label">Ordered Date</label>
                                     <div class="col-sm-10">
-                                        <input type="date" class="form-control" id="ordered_date" name="ordered_date">
+                                        <input type="date" class="form-control" id="ordered_date" name="ordered_date" value="{{ order.ordered_date|date:"Y-m-d" }}">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="status" class="col-sm-2 col-form-label">Status</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" id="status" name="status">
-                                            <option value="Pending">Pending</option>
-                                            <option value="Shipped">Shipped</option>
-                                            <option value="Delivered">Delivered</option>
-                                            <option value="Cancelled">Cancelled</option>
+                                            <option value="Pending" {% if order.status == "Pending" %}selected{% endif %}>Pending</option>
+                                            <option value="Shipped" {% if order.status == "Shipped" %}selected{% endif %}>Shipped</option>
+                                            <option value="Delivered" {% if order.status == "Delivered" %}selected{% endif %}>Delivered</option>
+                                            <option value="Cancelled" {% if order.status == "Cancelled" %}selected{% endif %}>Cancelled</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="estimated_delivery_date" class="col-sm-2 col-form-label">Estimated Delivery Date</label>
                                     <div class="col-sm-10">
-                                        <input type="date" class="form-control" id="estimated_delivery_date" name="estimated_delivery_date">
+                                        <input type="date" class="form-control" id="estimated_delivery_date" name="estimated_delivery_date" value="{{ order.estimated_delivery_date|date:"Y-m-d" }}">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <div class="col-sm-10 offset-sm-2">
-                                        <button type="submit" class="btn btn-primary">Add Order</button>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
                                     </div>
                                 </div>
                             </form>

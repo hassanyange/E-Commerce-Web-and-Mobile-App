@@ -28,7 +28,7 @@ class CreateUserForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 
-class CustomerForm(forms.ModelForm):
+class UserForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['username', 'email', 'location', 'phone_number']
@@ -49,3 +49,18 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['customer_name', 'product_name', 'billing_address', 'shipping_address', 'payment', 'estimated_delivery_date', 'status']
+
+
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['item_name', 'category', 'price', 'item_image', 'description', 'seller_name']
+        widgets = {
+            'item_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter item name'}),
+            'category': forms.Select(attrs={'class': 'form-select'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter price'}),
+            'item_image': forms.FileInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Enter description'}),
+            'seller_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter seller name'}),
+        }

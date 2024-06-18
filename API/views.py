@@ -1,13 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework import status
 from rest_framework.response import Response
-from .serializers import UserSerializer
-from main.models import Customer, Category, Item, OrderItem, Cart, Order, Address, Invoice, Payment, Comment
-from .serializers import CustomerSerializer, CategorySerializer, ItemSerializer, OrderItemSerializer, CartSerializer, OrderSerializer, AddressSerializer, InvoiceSerializer, PaymentSerializer, CommentSerializer
-
-
-
+from rest_framework import status
+from .serializers import UserSerializer, CustomerSerializer, CategorySerializer, ItemSerializer, OrderSerializer, AddressSerializer, InvoiceSerializer, PaymentSerializer, CommentSerializer
+from main.models import Customer, Category, Item, Order, Address, Invoice, Payment, Comment
 
 class RegistrationViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['post'])
@@ -17,7 +13,7 @@ class RegistrationViewSet(viewsets.ViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
@@ -29,14 +25,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-
-class OrderItemViewSet(viewsets.ModelViewSet):
-    queryset = OrderItem.objects.all()
-    serializer_class = OrderItemSerializer
-
-class CartViewSet(viewsets.ModelViewSet):
-    queryset = Cart.objects.all()
-    serializer_class = CartSerializer
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()

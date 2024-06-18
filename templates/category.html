@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}Category List{% endblock %}
+
 {% block content %}
 <div class="main-content">
     <div class="page-content">
@@ -22,8 +24,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 float-end">
-                                        <a href="{% url 'add_item' %}" class="btn btn-primary">
-                                            <i class="mdi mdi-plus me-1"></i> Add Item
+                                        <a href="{% url 'add_category' %}" class="btn btn-primary">
+                                            <i class="mdi mdi-plus me-1"></i> Add Category
                                         </a>
                                     </div>
                                 </div>
@@ -34,35 +36,29 @@
                                     <thead class="bg-light">
                                         <tr>
                                             <th scope="col" style="width: 50px;">#</th>
-                                            <th scope="col">Item Name</th>
-                                            <th scope="col">Item Image</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Description</th>
-                                            <th scope="col">Seller Name</th>
+                                            <th scope="col">Category Name</th>
                                             <th scope="col" style="width: 200px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for item in items %}
+                                        {% for category in categories %}
                                         <tr>
                                             <th scope="row">{{ forloop.counter }}</th>
-                                            <td>{{ item.item_name }}</td>
-                                            <td>  <img src="{{ item.item_image.url }}" alt="{{ item.item_name }}" style="max-width: 100px; max-height: 100px;"></td>
-                                            <td>{{ item.category }}</td>
-                                            <td>{{ item.price }}</td>
-                                            <td>{{ item.description }}</td>
-                                            <td>{{ item.seller_name }}</td>
+                                            <td>{{ category.category }}</td>
                                             <td>
                                                 <ul class="list-inline mb-0">
                                                     <li class="list-inline-item">
-                                                        <a href="{% url 'edit_item' item.id %}" class="px-2 text-primary"><i class="ri-pencil-line font-size-18"></i></a>
+                                                        <a href="{% url 'edit_category' category.pk %}" class="px-2 text-primary"><i class="ri-pencil-line font-size-18"></i></a>
                                                     </li>
                                                     <li class="list-inline-item">
-                                                        <a href="{% url 'delete_item' item.id %}" class="px-2 text-danger"><i class="ri-delete-bin-line font-size-18"></i></a>
+                                                        <a href="{% url 'delete_category' category.pk %}" class="px-2 text-danger"><i class="ri-delete-bin-line font-size-18"></i></a>
                                                     </li>
                                                 </ul>
                                             </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="3" class="text-center">No categories found.</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -71,7 +67,7 @@
                             <div class="row mt-4">
                                 <div class="col-sm-6">
                                     <div>
-                                        <p class="mb-sm-0">Showing {{ items|length }} entries</p>
+                                        <p class="mb-sm-0">Showing {{ categories|length }} entries</p>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">

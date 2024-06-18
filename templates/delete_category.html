@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Delete Category{% endblock %}
+
+
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Delete Category</h4>
+
+                <p>Are you sure you want to delete the category "{{ category.category }}"?</p>
+                
+                <!-- Delete Form -->
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3 row">
+                        <div class="col-sm-10 offset-sm-2">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <a href="{% url 'category_list' %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+                <!-- End Delete Form -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

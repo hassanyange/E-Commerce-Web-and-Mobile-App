@@ -240,6 +240,7 @@
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{% url 'item_list' %}">Items List</a></li>
+                                    <li><a href="{% url 'category_list' %}">Category  List</a></li>
                                 </ul>
                             </li>
                             
@@ -247,7 +248,9 @@
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <!-- <i class="uim uim-comment-message"></i> -->
                                     <span>User Management </span>
-                                <ul class="sub-menu" aria-expanded="true">
+
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="{% url 'userslist' %}">Users List</a></li>
                                 </ul>
                             </li>
@@ -262,7 +265,7 @@
                                             <li><a href="{% url 'orders' %}">Orders</a></li>
                         
                                             <li><a href="">Orders Status</a></li>
-                                            <li><a href="{% url 'sales'%}">Sales</a></li>
+                                       
                                         </ul>
                                  
                               
@@ -427,6 +430,7 @@
 
     <!-- App js -->
     <script src="{% static 'assets/js/app.js' %}"></script>
+    
 
 
     <!-- Add jQuery and Bootstrap JS in your project -->

@@ -1,9 +1,5 @@
 from rest_framework import serializers
-from main.models import User, Customer, Category, Item, OrderItem, Cart, Order, Address, Invoice, Payment, Comment
-
-
-
-
+from main.models import User, Customer, Category, Item, Order, Address, Invoice, Payment, Comment
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,37 +14,22 @@ class UserSerializer(serializers.ModelSerializer):
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = '__all__'
+        fields = ['username', 'email', 'location', 'phone_number']
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ['category']
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = '__all__'
-
-class OrderItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OrderItem
-        fields = '__all__'
-
-class CartSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Cart
-        fields = '__all__'
-
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = '__all__'
+        fields = ['item_name', 'category', 'price', 'item_image', 'description', 'seller_name']
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = '__all__'
+        fields = ['user', 'street_address', 'postal_code', 'is_default']
 
 class InvoiceSerializer(serializers.ModelSerializer):
     class Meta:
@@ -64,3 +45,12 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['user', 'items', 'billing_address', 'shipping_address', 'payment', 'ordered_date', 'status', 'estimated_delivery_date', 'customer_name', 'product_name']
+
+    def get_total(self, obj):
+        total = sum([item.price for item in obj.items.all()])
+        return total
