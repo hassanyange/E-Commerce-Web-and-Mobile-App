@@ -38,12 +38,7 @@
                                     <table class="table table-hover table-nowrap align-middle mb-0">
                                         <thead class="bg-light">
                                             <tr>
-                                                <th scope="col" style="width: 50px;">
-                                                    <div class="form-check font-size-16">
-                                                        <input type="checkbox" class="form-check-input" id="contacusercheck">
-                                                        <label class="form-check-label" for="contacusercheck"></label>
-                                                    </div>
-                                                </th>
+                                                <th scope="col" style="width: 50px;">#</th>
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Location</th>
                                                 <th scope="col">Email</th>
@@ -54,15 +49,8 @@
                                         <tbody>
                                             {% for customer in customers %}
                                             <tr>
-                                                <th scope="row">
-                                                    <div class="form-check font-size-16">
-                                                        <input type="checkbox" class="form-check-input" id="contacusercheck{{ forloop.counter }}">
-                                                        <label class="form-check-label" for="contacusercheck{{ forloop.counter }}"></label>
-                                                    </div>
-                                                </th>
-                                                <td>
-                                                    {{ customer.username }}
-                                                </td>
+                                                <th scope="row">{{ forloop.counter }}</th>
+                                                <td>{{ customer.username }}</td>
                                                 <td>{{ customer.location }}</td>
                                                 <td>{{ customer.email }}</td>
                                                 <td>{{ customer.phone_number }}</td>
@@ -74,22 +62,13 @@
                                                         <li class="list-inline-item">
                                                             <a href="javascript:void(0);" class="px-2 text-danger"><i class="ri-delete-bin-line font-size-18"></i></a>
                                                         </li>
-                                                        <li class="list-inline-item dropdown">
-                                                            <a class="dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                                                                <i class="ri-more-2-fill"></i>
-                                                            </a>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="#">Action</a>
-                                                                <a class="dropdown-item" href="#">Another action</a>
-                                                                <a class="dropdown-item" href="#">Something else here</a>
-                                                            </div>
-                                                        </li>
                                                     </ul>
                                                 </td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
                                     </table>
+                                    
                                 </div>
                                 <!-- Pagination -->
                                 <div class="row mt-4">

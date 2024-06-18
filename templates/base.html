@@ -235,41 +235,37 @@
 
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="uim uim-comment-message"></i>
-                                    <span>Management section</span>
+                                    <!-- <i class="uim uim-comment-message"></i> -->
+                                    <span>Item Management </span>
                                 </a>
-                                <ul class="sub-menu" aria-expanded="true">
-                                    <li><a href="{% url 'item_list' %}">Items Management</a></li>
-
-                                 
-
-                                    <li>
-                                        <a href="{% url 'userslist' %}" class="has-arrow">User Management</a>
-                                        <ul class="sub-menu" aria-expanded="false">
-                                            <li><a href="{% url 'userslist' %}">Users List</a></li>
-                                            <li><a href="#">Users Detail</a></li>
-                                        </ul>
-                                    </li>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{% url 'item_list' %}">Items List</a></li>
                                 </ul>
                             </li>
-               
-
+                            
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="uim uim-comment-message"></i>
+                                    <!-- <i class="uim uim-comment-message"></i> -->
+                                    <span>User Management </span>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li><a href="{% url 'userslist' %}">Users List</a></li>
+                                </ul>
+                            </li>
+                       
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <!-- <i class="uim uim-comment-message"></i> -->
                                     <span>Transaction Management</span>
                                 </a>
-                                <ul class="sub-menu" aria-expanded="true">
-                                    <li>
-                                        <a href="javascript: void(0);" class="has-arrow">Orders and Sales</a>
+                                
                                         <ul class="sub-menu" aria-expanded="false">
                                             <li><a href="{% url 'orders' %}">Orders</a></li>
                                             <li><a href="">Orders Status</a></li>
                                             <li><a href="{% url 'sales'%}">Sales</a></li>
                                         </ul>
-                                    </li>
-
+                                 
                               
+                            </li>
 
                                     <li>
                                         <a href="javascript: void(0);" class="has-arrow">Invoices and Payments</a>
@@ -280,12 +276,12 @@
                                     </li>
 
                                    
-                                </ul>
-                            </li>
+                              
+                          
                             
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="uim uim-comment-message"></i>
+                                    <!-- <i class="uim uim-comment-message"></i> -->
                                     <span>Analytic section</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
@@ -293,44 +289,24 @@
 
                                     <li><a href="#">Sales Report</a></li>
 
-                                    <li><a href="#">User Engagement</a></li>
-
-
                                 </ul>
                             </li>
+
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="uim uim-comment-message"></i>
+                                    <!-- <i class="uim uim-comment-message"></i> -->
                                     <span>Settings</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="true">
                                  
 
-                                    <li><a href="{% url 'settings'%}">System Settings</a></li>
-
-                              
-
+                                    <li><a href="{% url 'settings'%}">ProfileSettings</a></li>
 
                                 </ul>
                             </li>
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="uim uim-comment-message"></i>
-                                    <span>Supports and Feedback</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="true">
-                                 
+                          
 
-                                    <li><a href="#">Help Center</a></li>
-
-                                    <li><a href="#">Feedbacks</a></li>
-
-                                    
-                                </ul>
-                            </li>
-                           
-
-                            
+                     </ul>  
 
                     </div>
                     <!-- Sidebar -->
@@ -344,24 +320,12 @@
                             </div>
 
                             <div class="flex-grow-1 ms-2 text-start">
-                                <span class="ms-1 fw-medium user-name-text">Admin</span>
+                                <span class="ms-1 fw-medium user-name-text">{{ request.user.username }}</span>
                             </div>
 
-                            <div class="flex-shrink-0 text-end">
-                                <i class="mdi mdi-dots-vertical font-size-16"></i>
-                            </div>
                         </span>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <!-- item-->
-                        <a class="dropdown-item" href="pages-profile.html"><i class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Profile</span></a>
-                        <a class="dropdown-item" href="apps-chat.html"><i class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Messages</span></a>
-                        <a class="dropdown-item" href="pages-faq.html"><i class="mdi mdi-lifebuoy text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Help</span></a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="pages-profile.html"><i class="mdi mdi-wallet text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Balance : <b>Tsh 5971.67</b></span></a>
-                        <a class="dropdown-item" href="#"><span class="badge bg-primary mt-1 float-end">New</span><i class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Settings</span></a>
-                        <a class="dropdown-item" href="auth-lock-screen.html"><i class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Lock screen</span></a>
-                    </div>
+                   
                 </div>
 
             </div>
