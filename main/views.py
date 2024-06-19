@@ -3,11 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib import messages
 from django.db.models import Sum
-from .forms import UserForm, CategoryForm, ItemForm, OrderStatusForm,LoginForm,CreateUserForm
-from .forms import OrderForm
+from .forms import UserForm, CategoryForm, ItemForm, OrderStatusForm, LoginForm, CreateUserForm, OrderForm
 from .models import *
-
-
 
 def signin(request):
     if request.method == 'GET':
@@ -15,63 +12,43 @@ def signin(request):
         return render(request, 'login.html', {'form': form})
     elif request.method == 'POST':
         form = LoginForm(request.POST)
-        
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(request,username=username,password=password)
+            user = authenticate(request, username=username, password=password)
             if user:
                 login(request, user)
-                # messages.success(request,f'Hi {username.title()}, welcome back!')
                 return redirect('index')
-        
-        # form is not valid or user is not authenticated
-        messages.error(request,f'Invalid username or password')
-        return render(request,'login.html',{'form': form})
- 
-    
+        messages.error(request, 'Invalid username or password')
+        return render(request, 'login.html', {'form': form})
+
 def register(request):
     if request.method == 'GET':
         form = CreateUserForm()
-        return render(request, 'register.html', { 'form': form})
-    
-    if request.method == 'POST':
+        return render(request, 'register.html', {'form': form})
+    elif request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'user account succesful created')
+            messages.success(request, 'User account successfully created')
             return redirect('login')
-            
-        else: 
-            context = {'form':form}
-            return render(request, 'register.html', context)
-
-
+        else:
+            return render(request, 'register.html', {'form': form})
 
 def sign_out(request):
     logout(request)
-    # messages.success(request,f'You have been logged out.')
-    return redirect('login') 
+    return redirect('login')
 
-
-# @login_required
+@login_required
 def index(request):
     return render(request, 'index.html')
 
-
-
-#   ORDERS
-
-# @login_required
+@login_required
 def manage_orders(request):
     orders = Order.objects.all()
-    context = {
-        'orders': orders
-    }
-    return render(request, 'orders.html', context)
+    return render(request, 'orders.html', {'orders': orders})
 
-
-
+@login_required
 def add_order(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -82,6 +59,7 @@ def add_order(request):
         form = OrderForm()
     return render(request, 'add_order.html', {'form': form})
 
+@login_required
 def edit_order(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     if request.method == 'POST':
@@ -93,6 +71,7 @@ def edit_order(request, order_id):
         form = OrderForm(instance=order)
     return render(request, 'edit_order.html', {'form': form, 'order': order})
 
+@login_required
 def delete_order(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     if request.method == 'POST':
@@ -100,87 +79,83 @@ def delete_order(request, order_id):
         return redirect('manage_orders')
     return render(request, 'delete_order.html', {'order': order})
 
-# @login_required
+@login_required
 def sales_overview(request):
-    # Assuming you want to aggregate sales data
-    sales = Item.objects.all()  # Customize this query based on your sales logic
+    sales = Item.objects.all()
     sales_data = []
     for item in sales:
-        # Use Django's Sum function to aggregate quantity
-        total_quantity = Order.objects.filter(item=item).aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0
+        total_quantity = Order.objects.filter(items=item).count()
         total_sales = total_quantity * item.price
         sales_data.append({
             'item_name': item.item_name,
             'total_quantity': total_quantity,
             'total_sales': total_sales,
         })
-    context = {'sales': sales_data}
-    return render(request, 'sales.html', context)
+    return render(request, 'sales.html', {'sales': sales_data})
 
-
-# @login_required
+@login_required
 def invoice_list(request):
     invoices = Invoice.objects.filter(user=request.user)
     return render(request, 'invoices.html', {'invoices': invoices})
 
-# @login_required
+@login_required
 def invoice_detail(request, id):
     invoice = get_object_or_404(Invoice, id=id, user=request.user)
     return render(request, 'invoice_detail.html', {'invoice': invoice})
 
-# @login_required
+@login_required
 def payment_list(request):
     payments = Payment.objects.filter(user=request.user)
     return render(request, 'payments.html', {'payments': payments})
 
-
+@login_required
 def order_status(request, id):
-    order = get_object_or_404(Order, id=id, user=request.user )
+    order = get_object_or_404(Order, id=id, user=request.user)
     return render(request, 'order_status.html', {'order': order})
 
-#    USER LIST
+@login_required
 def userslist(request):
     customers = Customer.objects.all()
     return render(request, 'users-list.html', {'customers': customers})
 
-
+@login_required
 def add_user(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('users_list')
+            return redirect('userslist')
     else:
         form = UserForm()
     return render(request, 'add_user.html', {'form': form})
 
+@login_required
 def edit_user(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     if request.method == 'POST':
         form = UserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('users_list')
+            return redirect('userslist')
     else:
         form = UserForm(instance=user)
     return render(request, 'edit_user.html', {'form': form, 'user': user})
 
+@login_required
 def delete_user(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     if request.method == 'POST':
         user.delete()
-        return redirect('users_list')
+        return redirect('userslist')
     return render(request, 'delete_user.html', {'user': user})
 
-
-
-
-                                 #   ITEMS
+@login_required
 def item_list(request):
     items = Item.objects.all()
     categories = Category.objects.all()
     return render(request, 'item.html', {'items': items, 'categories': categories})
 
+@login_required
 def add_item(request):
     categories = Category.objects.all()
     if request.method == 'POST':
@@ -192,7 +167,7 @@ def add_item(request):
         form = ItemForm()
     return render(request, 'add_item.html', {'form': form, 'categories': categories})
 
-
+@login_required
 def edit_item(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     if request.method == 'POST':
@@ -204,11 +179,20 @@ def edit_item(request, item_id):
         form = ItemForm(instance=item)
     return render(request, 'edit_item.html', {'form': form, 'item': item})
 
-        # CATEGORY
+@login_required
+def delete_item(request, item_id):
+    item = get_object_or_404(Item, pk=item_id)
+    if request.method == 'POST':
+        item.delete()
+        return redirect('item_list')
+    return render(request, 'delete_item.html', {'item': item})
+
+@login_required
 def category_list(request):
     categories = Category.objects.all()
     return render(request, 'category.html', {'categories': categories})
 
+@login_required
 def add_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -219,6 +203,7 @@ def add_category(request):
         form = CategoryForm()
     return render(request, 'add_category.html', {'form': form})
 
+@login_required
 def edit_category(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -230,6 +215,7 @@ def edit_category(request, pk):
         form = CategoryForm(instance=category)
     return render(request, 'edit_category.html', {'form': form})
 
+@login_required
 def delete_category(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == 'POST':
@@ -237,18 +223,107 @@ def delete_category(request, pk):
         return redirect('category_list')
     return render(request, 'delete_category.html', {'category': category})
 
-
-
-
-
-def delete_item(request, item_id):
-    item = get_object_or_404(Item, pk=item_id)
-    if request.method == 'POST':
-        item.delete()
-        return redirect('item_list')
-    return render(request, 'delete_item.html', {'item': item})
-
-
-
+@login_required
 def settings(request):
     return render(request, 'settings.html')
+
+# New save views
+@login_required
+def add_user_save(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User successfully added')
+            return redirect('userslist')
+    else:
+        form = UserForm()
+    return render(request, 'add_user.html', {'form': form})
+
+@login_required
+def add_order_save(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Order successfully added')
+            return redirect('manage_orders')
+    else:
+        form = OrderForm()
+    return render(request, 'add_order.html', {'form': form})
+
+@login_required
+def add_category_save(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Category successfully added')
+            return redirect('category_list')
+    else:
+        form = CategoryForm()
+    return render(request, 'add_category.html', {'form': form})
+
+@login_required
+def add_item_save(request):
+    if request.method == 'POST':
+        form = ItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Item successfully added')
+            return redirect('item_list')
+    else:
+        form = ItemForm()
+    return render(request, 'add_item.html', {'form': form})
+
+@login_required
+def edit_user_save(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User successfully updated')
+            return redirect('userslist')
+    else:
+        form = UserForm(instance=user)
+    return render(request, 'edit_user.html', {'form': form, 'user': user})
+
+@login_required
+def edit_order_save(request, order_id):
+    order = get_object_or_404(Order, pk=order_id)
+    if request.method == 'POST':
+        form = OrderForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Order successfully updated')
+            return redirect('manage_orders')
+    else:
+        form = OrderForm(instance=order)
+    return render(request, 'edit_order.html', {'form': form, 'order': order})
+
+@login_required
+def edit_item_save(request, item_id):
+    item = get_object_or_404(Item, pk=item_id)
+    if request.method == 'POST':
+        form = ItemForm(request.POST, request.FILES, instance=item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Item successfully updated')
+            return redirect('item_list')
+    else:
+        form = ItemForm(instance=item)
+    return render(request, 'edit_item.html', {'form': form, 'item': item})
+
+@login_required
+def edit_category_save(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Category successfully updated')
+            return redirect('category_list')
+    else:
+        form = CategoryForm(instance=category)
+    return render(request, 'edit_category.html', {'form': form})

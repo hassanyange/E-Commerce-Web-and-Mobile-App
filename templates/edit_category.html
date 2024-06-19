@@ -4,31 +4,36 @@
 {% block title %}Edit Category{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title mb-4">Edit Category</h4>
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">Edit Category</h4>
 
-                <!-- Category Form -->
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="mb-3 row">
-                        <label for="name" class="col-sm-2 col-form-label">Category Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" name="name" value="{{ category.category }}">
+                            <!-- Category Form -->
+                            <form method="post" action="{% url 'edit_category_save' category.pk %}">
+                                {% csrf_token %}
+                                <div class="mb-3 row">
+                                    <label for="name" class="col-sm-2 col-form-label">Category Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="name" name="name" value="{{ category.category }}">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <div class="col-sm-10 offset-sm-2">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- End Category Form -->
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <div class="col-sm-10 offset-sm-2">
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                        </div>
-                    </div>
-                </form>
-                <!-- End Category Form -->
+                </div>
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
-

@@ -36,5 +36,18 @@ urlpatterns = [
     path('invoices/<int:id>/', views.invoice_detail, name='invoice_detail'),
     path('payments/', views.payment_list, name='payments'),
     path('settings', views.settings, name='settings',),
-   
+
+
+
+    # NEW URL
+    # New save views
+    path('users/add/save/', views.add_user_save, name='add_user_save'),
+    path('orders/add/save/', views.add_order_save, name='add_order_save'),
+    path('categories/add/save/', views.add_category_save, name='add_category_save'),
+    path('items/add/save/', views.add_item_save, name='add_item_save'),
+    path('users/<int:user_id>/edit/save/', views.edit_user_save, name='edit_user_save'),
+    path('orders/<int:order_id>/edit/save/', views.edit_order_save, name='edit_order_save'),
+    path('categories/<int:pk>/edit/save/', views.edit_category_save, name='edit_category_save'),
+    path('items/<int:item_id>/edit/save/', views.edit_item_save, name='edit_item_save'),
 ]
+   

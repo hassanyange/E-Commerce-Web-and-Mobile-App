@@ -14,7 +14,7 @@
                             <h4 class="card-title mb-4">Add Category</h4>
 
                             <!-- Category Form -->
-                            <form method="post">
+                            <form method="post" action="{% url 'add_category_save' %}">
                                 {% csrf_token %}
                                 <div class="mb-3 row">
                                     <label for="name" class="col-sm-2 col-form-label">Category Name</label>

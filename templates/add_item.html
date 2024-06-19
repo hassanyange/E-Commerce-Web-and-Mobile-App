@@ -12,7 +12,7 @@
                             <h4 class="card-title mb-4">Add Item</h4>
 
                             <!-- Item Form -->
-                            <form method="post" enctype="multipart/form-data" action="{% url 'add_item' %}">
+                            <form method="post" enctype="multipart/form-data" action="{% url 'add_item_save' %}">
                                 {% csrf_token %}
                                 <div class="mb-3 row">
                                     <label for="item_name" class="col-sm-2 col-form-label">Item Name</label>
