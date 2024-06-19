@@ -170,14 +170,13 @@ def add_item(request):
 @login_required
 def edit_item(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
-    if request.method == 'POST':
-        form = ItemForm(request.POST, request.FILES, instance=item)
-        if form.is_valid():
-            form.save()
-            return redirect('item_list')
-    else:
-        form = ItemForm(instance=item)
-    return render(request, 'edit_item.html', {'form': form, 'item': item})
+    categories = Category.objects.all()  # Fetch all categories
+    context = {
+        'item': item,
+        'categories': categories,
+    }
+    return render(request, 'edit_item.html', context)
+
 
 @login_required
 def delete_item(request, item_id):
@@ -204,8 +203,8 @@ def add_category(request):
     return render(request, 'add_category.html', {'form': form})
 
 @login_required
-def edit_category(request, pk):
-    category = get_object_or_404(Category, pk=pk)
+def edit_category(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
     if request.method == 'POST':
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
@@ -316,8 +315,8 @@ def edit_item_save(request, item_id):
     return render(request, 'edit_item.html', {'form': form, 'item': item})
 
 @login_required
-def edit_category_save(request, pk):
-    category = get_object_or_404(Category, pk=pk)
+def edit_category_save(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
     if request.method == 'POST':
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():

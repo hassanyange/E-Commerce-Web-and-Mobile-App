@@ -21,7 +21,7 @@ urlpatterns = [
     #  CATEGORY
     path('categories/', views.category_list, name='category_list'),
     path('categories/add/', views.add_category, name='add_category'),
-    path('categories/edit/<int:pk>/', views.edit_category, name='edit_category'),
+    path('categories/edit/<int:category_id>/', views.edit_category, name='edit_category'),
     path('categories/delete/<int:pk>/', views.delete_category, name='delete_category'),
 
     #     ORDERS
@@ -47,7 +47,7 @@ urlpatterns = [
     path('items/add/save/', views.add_item_save, name='add_item_save'),
     path('users/<int:user_id>/edit/save/', views.edit_user_save, name='edit_user_save'),
     path('orders/<int:order_id>/edit/save/', views.edit_order_save, name='edit_order_save'),
-    path('categories/<int:pk>/edit/save/', views.edit_category_save, name='edit_category_save'),
+    path('categories/<int:category_id>/edit/save/', views.edit_category_save, name='edit_category_save'),
     path('items/<int:item_id>/edit/save/', views.edit_item_save, name='edit_item_save'),
 ]
    
